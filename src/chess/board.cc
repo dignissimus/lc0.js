@@ -38,6 +38,49 @@
 #if not defined(NO_PEXT)
 // Include header for pext instruction.
 #include <immintrin.h>
+#include <wasm_simd128.h>
+/* LLVM bmi2intrin.h ~ https://llvm.org/LICENSE.txt */
+extern __inline unsigned long long
+    __attribute__((__gnu_inline__, __always_inline__, __artificial__))
+    _pext_u64(unsigned long long __X, unsigned long long __M) {
+  unsigned long __p = 0x4040404040404040UL; // initial bit permute control
+  const unsigned long __mask = 0x8000000000000000UL;
+  unsigned long __m = __M;
+  unsigned long __c;
+  unsigned long __result;
+
+  /* if the mask is constant and selects 8 bits or less we can use
+   the Power8 Bit permute instruction.  */
+  if (false && __builtin_constant_p(__M) && (__builtin_popcountl(__M) <= 8)) {
+    /* Also if the pext mask is constant, then the popcount is
+     constant, we can evaluate the following loop at compile
+     time and use a constant bit permute vector.  */
+    long __i;
+    for (__i = 0; __i < __builtin_popcountl(__M); __i++) {
+      __c = __builtin_clzl(__m);
+      __p = (__p << 8) | __c;
+      __m ^= (__mask >> __c);
+    }
+    __result = 0;// __builtin_bpermd(__p, __X);
+  } else {
+    __p = 64 - __builtin_popcountl(__M);
+    __result = 0;
+    /* We could a use a for loop here, but that combined with
+     -funroll-loops can expand to a lot of code.  The while
+     loop avoids unrolling and the compiler commons the xor
+     from clearing the mask bit with the (m != 0) test.  The
+     result is a more compact loop setup and body.  */
+    while (__m != 0) {
+      unsigned long __t;
+      __c = __builtin_clzl(__m);
+      __t = (__X & (__mask >> __c)) >> (__p - __c);
+      __m ^= (__mask >> __c);
+      __result |= (__t);
+      __p++;
+    }
+  }
+  return __result;
+}
 #endif
 
 namespace lczero {
