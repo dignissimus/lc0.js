@@ -14,6 +14,7 @@ case $1 in
     ;;
 esac
 
+export CPLUS_INCLUDE_PATH=$(realpath include)
 BUILDDIR=build/${BUILDTYPE}
 
 if ! hash meson 2>/dev/null && [ -x ${HOME}/.local/bin/meson ]
