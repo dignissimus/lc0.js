@@ -23,9 +23,9 @@ fi
 
 if [ -f ${BUILDDIR}/build.ninja ]
 then
-  meson configure ${BUILDDIR} -Dbuildtype=${BUILDTYPE} -Dprefix=${INSTALL_PREFIX:-/usr/local} "$@"
+  meson configure ${BUILDDIR} -Dbuildtype=${BUILDTYPE} -Dprefix=${INSTALL_PREFIX:-/usr/local} -Dblas=true -Dopenblas=true "$@"
 else
-  meson ${BUILDDIR} --buildtype ${BUILDTYPE} --prefix ${INSTALL_PREFIX:-/usr/local} "$@"
+  meson ${BUILDDIR} --cross-file wasm.txt --buildtype ${BUILDTYPE} --prefix ${INSTALL_PREFIX:-/usr/local} -Dblas=true -Dopenblas=true "$@" --default-library static
 fi
 
 cd ${BUILDDIR}
