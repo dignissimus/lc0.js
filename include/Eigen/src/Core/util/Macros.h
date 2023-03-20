@@ -58,12 +58,7 @@
 // Compiler identification, EIGEN_COMP_*
 //------------------------------------------------------------------------------------------
 
-/// \internal EIGEN_COMP_GNUC set to 1 for all compilers compatible with GCC
-#ifdef __GNUC__
-  #define EIGEN_COMP_GNUC (__GNUC__*10+__GNUC_MINOR__)
-#else
-  #define EIGEN_COMP_GNUC 0
-#endif
+#define EIGEN_COMP_GNUC 0
 
 /// \internal EIGEN_COMP_CLANG set to major+minor version (e.g., 307 for clang 3.7) if the compiler is clang
 #if defined(__clang__)
@@ -238,11 +233,7 @@
   #define EIGEN_ARCH_i386 0
 #endif
 
-#if EIGEN_ARCH_x86_64 || EIGEN_ARCH_i386
-  #define EIGEN_ARCH_i386_OR_x86_64 1
-#else
-  #define EIGEN_ARCH_i386_OR_x86_64 0
-#endif
+#define EIGEN_ARCH_i386_OR_x86_64 0
 
 /// \internal EIGEN_ARCH_ARM set to 1 if the architecture is ARM
 #if defined(__arm__)
