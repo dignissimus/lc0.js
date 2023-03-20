@@ -20,6 +20,24 @@ project('lc0', 'cpp',
 
 cc = meson.get_compiler('cpp')
 
+add_project_arguments('-msse', '-msse2', '-msimd128', '-D __i386__', language : 'cpp')
+add_project_arguments('-msse', '-msse2', '-msimd128', '-D __i386__', language : 'c')
+add_project_link_arguments(
+  '-sALLOW_MEMORY_GROWTH',
+  '-sNO_DISABLE_EXCEPTION_CATCHING',
+  '-sFORCE_FILESYSTEM',
+  '-lidbfs.js',
+  language : 'cpp'
+)
+add_project_link_arguments(
+  '-sALLOW_MEMORY_GROWTH',
+  '-sNO_DISABLE_EXCEPTION_CATCHING',
+  '-sFORCE_FILESYSTEM',
+  '-lidbfs.js',
+  language : 'c'
+)
+
+
 if not cc.has_header('optional') or not cc.has_header('string_view')
     error('Lc0 requires a compiler supporting C++17, for example g++ v8.0, ' +
           'clang v5.0 or later (with C++17 stdlib) and Visual Studio 2017 or ' +
@@ -308,8 +326,6 @@ if get_option('build_backends')
 
     endif
 
-    deps += dependency('eigen3', fallback: ['eigen', 'eigen_dep']).as_system()
-
     ispc = find_program('ispc', required: false)
     ispc_arch = 'x86-64'
     ispc_extra_args = []
@@ -435,9 +451,9 @@ if get_option('build_backends')
   ## cuDNN
   ## ~~~~~
   cudnn_libdirs = get_option('cudnn_libdirs')
-  cu_blas = cc.find_library('cublas', dirs: cudnn_libdirs, required: false)
+  cu_blas = cc.find_library('cublas_static', dirs: cudnn_libdirs, required: false)
   cu_dnn = cc.find_library('cudnn', dirs: cudnn_libdirs, required: false)
-  cu_dart = cc.find_library('cudart', dirs: cudnn_libdirs, required: false)
+  cu_dart = cc.find_library('cudart_static', dirs: cudnn_libdirs, required: false)
   nvcc = find_program('nvcc', '/usr/local/cuda/bin/nvcc', '/opt/cuda/bin/nvcc',
                       required: false)
 
