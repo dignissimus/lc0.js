@@ -26,7 +26,7 @@ add_project_link_arguments(
   '-sALLOW_MEMORY_GROWTH',
   '-sNO_DISABLE_EXCEPTION_CATCHING',
   '-sFORCE_FILESYSTEM',
-  '-sENVIRONMENT=worker',
+  '-sENVIRONMENT=web,worker',
   '-lidbfs.js',
   language : 'cpp'
 )
@@ -34,7 +34,7 @@ add_project_link_arguments(
   '-sALLOW_MEMORY_GROWTH',
   '-sNO_DISABLE_EXCEPTION_CATCHING',
   '-sFORCE_FILESYSTEM',
-  '-sENVIRONMENT=worker',
+  '-sENVIRONMENT=web,worker',
   '-lidbfs.js',
   language : 'c'
 )
