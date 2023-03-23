@@ -21,24 +21,18 @@ project('lc0', 'cpp',
 cc = meson.get_compiler('cpp')
 
 add_project_arguments('-msse', '-msse2', '-msimd128', '-D __i386__', language : 'cpp')
-add_project_arguments('-msse', '-msse2', '-msimd128', '-D __i386__', language : 'c')
 add_project_link_arguments(
   '-sALLOW_MEMORY_GROWTH',
   '-sNO_DISABLE_EXCEPTION_CATCHING',
   '-sFORCE_FILESYSTEM',
   '-sENVIRONMENT=web,worker',
+  '-sASYNCIFY',
+  '-sASYNCIFY_IMPORTS=[emscripten_await_line]',
+  '-sUSE_PTHREADS',
+  '-sPROXY_TO_PTHREAD',
   '-lidbfs.js',
   language : 'cpp'
 )
-add_project_link_arguments(
-  '-sALLOW_MEMORY_GROWTH',
-  '-sNO_DISABLE_EXCEPTION_CATCHING',
-  '-sFORCE_FILESYSTEM',
-  '-sENVIRONMENT=web,worker',
-  '-lidbfs.js',
-  language : 'c'
-)
-
 
 if not cc.has_header('optional') or not cc.has_header('string_view')
     error('Lc0 requires a compiler supporting C++17, for example g++ v8.0, ' +

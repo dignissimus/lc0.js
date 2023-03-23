@@ -40,6 +40,7 @@
 #include "utils/exception.h"
 #include "utils/logging.h"
 #include "utils/string.h"
+#include "utils/emscripten.h"
 #include "version.h"
 
 namespace lczero {
@@ -132,7 +133,7 @@ bool ContainsKey(const std::unordered_map<std::string, std::string>& params,
 void UciLoop::RunLoop() {
   std::cout.setf(std::ios::unitbuf);
   std::string line;
-  while (std::getline(std::cin, line)) {
+  while (emscripten_read_line(line)) {
     LOGFILE << ">> " << line;
     try {
       auto command = ParseCommand(line);
