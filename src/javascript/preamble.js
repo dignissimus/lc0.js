@@ -20,3 +20,5 @@ class Queue {
 }
 
 Module["queue"] = new Queue();
+Module["output"] = new Queue();
+Module["print"] = (message) => { Module["output"].push(message); }

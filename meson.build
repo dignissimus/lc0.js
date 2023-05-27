@@ -27,10 +27,12 @@ add_project_link_arguments(
   '-sFORCE_FILESYSTEM',
   '-sENVIRONMENT=web,worker',
   '-sASYNCIFY',
+  '-sASYNCIFY_STACK_SIZE=16384',
   '-sASYNCIFY_IMPORTS=[emscripten_await_line]',
   '-sUSE_PTHREADS',
   '-sPROXY_TO_PTHREAD',
   '-lidbfs.js',
+  '-lworkerfs.js',
   language : 'cpp'
 )
 
