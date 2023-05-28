@@ -339,28 +339,7 @@
     extern "C" {
       // In theory we should only include immintrin.h and not the other *mmintrin.h header files directly.
       // Doing so triggers some issues with ICC. However old gcc versions seems to not have this file, thus:
-      #if EIGEN_COMP_ICC >= 1110
-        #include <immintrin.h>
-      #else
-        #include <mmintrin.h>
-        #include <emmintrin.h>
-        #include <xmmintrin.h>
-        #ifdef  EIGEN_VECTORIZE_SSE3
-        #include <pmmintrin.h>
-        #endif
-        #ifdef EIGEN_VECTORIZE_SSSE3
-        #include <tmmintrin.h>
-        #endif
-        #ifdef EIGEN_VECTORIZE_SSE4_1
-        #include <smmintrin.h>
-        #endif
-        #ifdef EIGEN_VECTORIZE_SSE4_2
-        #include <nmmintrin.h>
-        #endif
-        #if defined(EIGEN_VECTORIZE_AVX) || defined(EIGEN_VECTORIZE_AVX512)
-        #include <immintrin.h>
-        #endif
-      #endif
+      #include <immintrin.h>
     } // end extern "C"
 
   #elif defined __VSX__
