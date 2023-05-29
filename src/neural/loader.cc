@@ -171,7 +171,10 @@ WeightsFile ParseWeightsProto(const std::string& buffer) {
 
 WeightsFile LoadWeightsFromFile(const std::string& filename) {
   FloatVectors vecs;
-  auto buffer = DecompressGzip(filename);
+  std::ifstream fs(filename);
+  std::stringstream ss;
+  ss << fs.rdbuf();
+  auto buffer = ss.str();
 
   if (buffer.size() < 2) {
     throw Exception("Invalid weight file: too small.");

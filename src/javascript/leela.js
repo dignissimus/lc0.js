@@ -4,8 +4,8 @@ setOption = (name, value) => runUci(`setoption name ${name} value ${value}`);
 go = () => runUci("go");
 
 const begin = async () => {
-    const weightUrl = "weights.pb.gz.bin";
-    const weightPath = "/home/web_user/weights.pb.gz";
+    const weightUrl = "weights.pb";
+    const weightPath = "/home/web_user/weights.pb";
     let weightData;
     if (!weightData) {
         console.log("Downloading weights");
@@ -17,7 +17,7 @@ const begin = async () => {
 
     FS.writeFile(weightPath, weightData);
     downloadWeights();
-    setOption("WeightsFile", "/home/web_user/weights.pb.gz");
+    setOption("WeightsFile", weightPath);
     setOption("backend", "eigen");
 }
 
