@@ -735,13 +735,7 @@ BlasNetwork<use_eigen>::BlasNetwork(const WeightsFile& file,
     CERR << "Eigen max batch size is " << max_batch_size_ << ".";
   } else {
 #ifdef USE_OPENBLAS
-    int num_procs = openblas_get_num_procs();
-    openblas_set_num_threads(1);
-    const char* core_name = openblas_get_corename();
-    const char* config = openblas_get_config();
     CERR << "BLAS vendor: OpenBLAS.";
-    CERR << "OpenBLAS [" << config << "].";
-    CERR << "OpenBLAS found " << num_procs << " " << core_name << " core(s).";
 #endif
 
 #ifdef USE_MKL

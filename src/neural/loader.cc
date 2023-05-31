@@ -170,7 +170,6 @@ WeightsFile ParseWeightsProto(const std::string& buffer) {
 }  // namespace
 
 WeightsFile LoadWeightsFromFile(const std::string& filename) {
-  FloatVectors vecs;
   std::ifstream fs(filename);
   std::stringstream ss;
   ss << fs.rdbuf();
